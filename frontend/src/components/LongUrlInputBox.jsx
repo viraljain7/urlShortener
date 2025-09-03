@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createShortUrl } from "../api/urlShortener";
+import { createShortUrl } from "../api/urlShortenerApi";
 import { toast } from "react-toastify";
 
 function LongUrlInputBox() {
