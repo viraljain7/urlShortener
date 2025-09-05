@@ -1,10 +1,8 @@
 import { tryCatchWrapper } from "../utils/tryCatchWrapper.js";
 import { AppError } from "../errors/AppError.js";
 import { createUser, findUserByEmail } from "../dao/userDAO.js";
-import { comparePassword, hashPassword, signToken, } from "../utils/helper.js";
+import { comparePassword, hashPassword, signToken } from "../utils/helper.js";
 import { cookieOptions } from "../config/cookieOptions.js";
-
-
 
 const authController = {
   // ✅ Register User
@@ -17,7 +15,7 @@ const authController = {
     }
 
     // 2. Check if user already exists
-    const existingUser = await findUserByEmail( email );
+    const existingUser = await findUserByEmail(email);
     if (existingUser) {
       return next(new AppError("User already exists", 400));
     }
@@ -26,7 +24,7 @@ const authController = {
     const hashedPassword = await hashPassword(password, 12);
 
     // 4. Create user
-    const { token, user } = await createUser( name, email, hashedPassword );
+    const { token, user } = await createUser(name, email, hashedPassword);
     if (!user) {
       return next(new AppError("Failed to create user", 500));
     }
@@ -34,7 +32,6 @@ const authController = {
     // 5. Generate JWT
     req.user = user;
     res.cookie("accessToken", token, cookieOptions);
-    
 
     // 6. Send response
     res.status(201).json({
@@ -61,7 +58,7 @@ const authController = {
     }
 
     // 2. Find user
-    const user = await findUserByEmail( email );
+    const user = await findUserByEmail(email);
     const token = signToken({ id: user._id.toString() });
     if (!user) {
       return next(new AppError("Invalid email or password", 401));
@@ -74,8 +71,6 @@ const authController = {
     }
 
     req.user = user;
-
-
     res.cookie("accessToken", token, cookieOptions);
 
     // 5. Send response
@@ -84,12 +79,15 @@ const authController = {
       message: "Login successful",
       data: {
         user: {
-          id: user._id,
+          _id: user._id,
           name: user.name,
           email: user.email,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+          avatar: user.avatar,
+          __v: user.__v,
         },
         token,
-
       },
     });
   }),

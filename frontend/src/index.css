@@ -2,3 +2,7 @@
 @plugin "daisyui" {
     themes: all;
   }
+
+  .form-container {
+    backface-visibility: hidden;
+  }

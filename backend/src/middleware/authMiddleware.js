@@ -27,6 +27,7 @@ const authMiddleware = async(req, res, next) => {
         message: "Token expired. Please log in again.",
       });
     }
+    
     if (err.name === "JsonWebTokenError") {
       return res.status(401).json({
         status: "fail",

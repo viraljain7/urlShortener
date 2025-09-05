@@ -1,15 +1,19 @@
-import React from "react";
-import LongUrlInputBox from "../components/LongUrlInputBox";
-import ShortUrlList from "../components/ShortUrlList";
+import HeroSection from "../components/HeroSection";
+import ShortenerForm from "../components/ShortenerForm";
+import UrlList from "../components/UrlList";
 
-function UrlShortenerPage() {
+export default function UrlShortenerPage() {
+ 
+
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-6">URL Shortener</h1>
-      <LongUrlInputBox />
-      <ShortUrlList />
+    <div className="min-h-screen  py-12 px-6">
+      {/* Hero Section */}
+     
+<HeroSection/>
+      {/* Shortener Form */}
+     <ShortenerForm/>
+      {/* URLs List */}
+     <UrlList/>
     </div>
   );
 }
-
-export default UrlShortenerPage;
