@@ -1,17 +1,14 @@
 import React from "react";
-import UrlShortenerPage from "./pages/UrlShortenerPage";
-import { LoginForm } from "./pages/Login";
-import { RegisterForm } from "./pages/Register";
-import Auth from "./pages/Auth";
+import { Outlet } from "@tanstack/react-router";
 
 const UrlShortener = () => {
   return (
     <div
       className="flex items-center justify-center min-h-screen"
-      data-theme="light"
+      data-theme="lofi"
     >
       {/* <UrlShortenerPage /> */}
-      <Auth/>
+      <Outlet/>
     </div>
   );
 };

@@ -2,6 +2,9 @@ import { Mail, Lock, EyeOff, Eye, User } from "lucide-react";
 import { useState } from "react";
 import { registerUser } from "../api/userApi";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { login } from "../store/authSlice";
+import { useNavigate } from "@tanstack/react-router";
 
 export function RegisterForm({ changePage }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,6 +13,9 @@ export function RegisterForm({ changePage }) {
     email: "",
     password: "",
   });
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+
 
   const registerHandler = async () => {
     try {
@@ -25,9 +31,11 @@ export function RegisterForm({ changePage }) {
 
       if (data.status === "success") {
         toast.success(data.message);
+        dispatch(login(data.data.user));  
+        navigate({to:"/"});
+        setRegisterData({ name: "", email: "", password: "" });
       }
       // Handle successful registration (e.g., redirect to login page)
-      setRegisterData({ name: "", email: "", password: "" });
       changePage();
     } catch (error) {
       console.error("Registration error:", error);

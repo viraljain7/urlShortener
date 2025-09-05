@@ -2,6 +2,9 @@ import { Mail, Lock, EyeOff, Eye, User } from "lucide-react";
 import { useState } from "react";
 import { loginUser } from "../api/userApi";
 import { toast } from "react-toastify";
+import { useDispatch,  } from "react-redux";
+import { login } from "../store/authSlice";
+import { useNavigate } from "@tanstack/react-router";
 
 export function LoginForm({ changePage }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,6 +14,11 @@ export function LoginForm({ changePage }) {
     password: "",
   });
 
+  // const auth=useSelector((state)=>state.auth);
+const navigate=useNavigate();
+
+  const dispatch=useDispatch();
+
   const loginHandler = async () => {
     try {
       if (!loginData.email || !loginData.password) {
@@ -19,8 +27,12 @@ export function LoginForm({ changePage }) {
       const data = await loginUser(loginData.email, loginData.password);
       if (data.status === "success") {
         toast.success(data.message);
+        dispatch(login(data.data.user));
+        setLoginData({ email: "", password: "" });
+        navigate({to:"/"});
       }
-      setLoginData({ email: "", password: "" });
+
+      
       // Handle successful login (e.g., redirect to dashboard)
     } catch (error) {
       console.error("Login failed:", error);

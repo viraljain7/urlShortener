@@ -39,9 +39,13 @@ const authController = {
       message: "User registered successfully",
       data: {
         user: {
-          id: user._id,
+          _id: user._id,
           name: user.name,
           email: user.email,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+          avatar: user.avatar,
+          __v: user.__v,
         },
         token,
       },
